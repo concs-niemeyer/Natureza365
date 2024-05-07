@@ -1,85 +1,70 @@
-//const { where } = require("sequelize");
 const { default: axios } = require("axios");
 const Descricao = require("../models/Descricao");
 const Local = require("../models/Local");
 const { verify } = require("jsonwebtoken");
+const { userId } = require("../middleware/userId");
 
 class LocalController {
-  // Método para listar todos os Locais da Naturea [ ok ]
+  // Método para listar todos os Locais da Natureza do Usuário [ok]
   async listar(req, res) {
-    try {
-      const local = await Local.findAll();
-      res.json(local);
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao obter usuarios." });
-    }
+    // Chamada do middleware para verificar o token JWT
+    userId(req, res, async () => {
+      const usuarioId = req.usuarioId;
+
+      try {
+        const local = await Local.findAll({ where: { usuarioId } });
+        res.json(local);
+      } catch (error) {
+        res.status(500).json({ error: "Erro ao localizar Local da Natureza." });
+      }
+    });
   }
 
   // Método para cadastrar um Local da Natureza [ ok ]
   async cadastrar(req, res) {
-    const localNome = req.body.nome;
-    const localEndereco = req.body.local_endereco; // Não funfa direito com o CEP, mas com outros dados Rua, Bairro, Cidade, Estado tá ok.
+    userId(req, req, async () => {
+        const usuarioId = req.usuarioId;
+        const { nome, local_endereco } = req.body;
 
-    // Obter o ID do usuário do token JWT
-    const token = req.headers.authorization;
+        try {
+            // Cria o novo local
+            const novoLocal = await Local.create({
+                nome: nome,
+                local_endereco: local_endereco,
+				usuarioId: usuarioId
+            });
 
-    if (!token) {
-      return res.status(401).json({ error: "Token JWT não fornecido" });
-    }
+            // Cria uma descrição padrão para o novo local
+            const novaDescricao = await Descricao.create({
+                local_id: novoLocal.id,
+                desc_fauna: "...defaultValue...",
+                desc_flora: "...defaultValue...",
+                data_visita: new Date(),
+                usuarioId: usuarioId,
+            });
 
-    let usuarioId;
-    try {
-      const decodedToken = verify(token, process.env.SECRET_JWT);
-      usuarioId = decodedToken.sub;
+            res.status(201).json({ local: novoLocal, descricao: novaDescricao });
+        } catch (error) {
+            console.error("Erro ao cadastrar o local:", error);
+            res.status(500).json({ error: "Erro ao cadastrar o local." });
+        }
+    });
+}
 
-    } catch (error) {
-      console.error("Erro ao verificar o token JWT:", error);
-      return res.status(401).json({ error: "Token JWT inválido" });
-    }
-
-    try {
-      const local = await Local.create({
-        nome: localNome,
-        local_endereco: localEndereco,
-        usuarioId: usuarioId, // atribuindo o ID do usuário
-      });
-
-      res.status(201).json(local);
-    } catch (error) {
-      console.error("Erro ao cadastrar o local:", error);
-      res
-        .status(500)
-        .json({ error: "Erro ao cadastrar a descrição do local da natureza" });
-    }
-  }
-
-  // Método para mapear um local informado
+  // Método para mapear um local do Usuário pelo local_endereco [  ]
   async mapear(req, res) {
-    try {
-      const { local_id } = req.params;
-      const local = await Local.findByPk(local_id);
-
-      if (!local) {
-        return res.status(404).json({ error: "Local não encontrado" });
-      }
-
-      const token = req.headers.authorization;
-
-      if (!token) {
-        return res.status(401).json({ error: "Token JWT não fornecido" });
-      }
-
-      let usuarioId;
+    // Chamada do middleware para verificar o token JWT
+    userId(req, res, async () => {
+      const usuarioId = req.usuarioId;
+      const local_id = req.params.local_id;
+      //console.log(local_id);
+      //console.log(usuarioId);
 
       try {
-        const decodedToken = verify(token, process.env.SECRET_JWT);
-        usuarioId = decodedToken.sub;
-      } catch (error) {
-        console.error("Erro ao verificar o token JWT:", error);
-        return res.status(401).json({ error: "Token JWT inválido" });
-      }
-
-      try {
+        const local = await Local.findOne({
+          where: { id: local_id, usuarioId: usuarioId },
+        });
+        //console.log(local.local_endereco) testando o endereço do local
         const response = await axios.get(
           `https://nominatim.openstreetmap.org/search.php?q=${encodeURIComponent(
             local.local_endereco
@@ -94,83 +79,76 @@ class LocalController {
           return res.status(404).json({ error: "Local não encontrado" });
         }
       } catch (error) {
-        console.error("Erro ao mapear o local:", error);
-        return res.status(500).json({ error: "Erro ao mapear o local" });
+        console.error("Erro ao obter local:", error);
+        res.status(500).json({ error: "Erro ao obter local." });
       }
-    } catch (error) {
-      console.error("Erro ao encontrar o local:", error);
-      return res.status(500).json({ error: "Erro ao encontrar o local" });
-    }
-  }
-
-  // Falta testar !!!
-  async listarUm(req, res) {
-    try {
-      const { id } = req.params;
-      const local = await Local.findByPk(id);
-
-      res.json(local);
-    } catch (error) {
-      res.status(500), json({ error: "Não foi possível realizar a busca" });
-    }
+    });
   }
 
   //Método para atualizar um local da Natureza na tabela de Descrições [ok]
+  //Método para atualizar um local da Natureza na tabela de Locais da Natureza [ ? ]
   async atualizar(req, res) {
-    const { local_id } = req.params;
-    const { desc_fauna, desc_flora, data_visita } = req.body;
+    userId(req, req, async () => {
+        const usuarioId = req.usuarioId;
+        const { local_id } = req.params;
+        const { nome, local_endereco, desc_fauna, desc_flora, data_visita } = req.body;
 
-    // Obter o ID do usuário do token JWT
-    const token = req.headers.authorization;
+        try {
+            // Atualiza o local
+            const localAtualizado = await Local.update({
+                nome: nome,
+                local_endereco: local_endereco,
+				usuarioId: usuarioId
+            }, {
+                where: {
+                    id: local_id
+                }
+            });
 
-    if (!token) {
-      return res.status(401).json({ error: "Token JWT não fornecido" });
-    }
+            // Atualiza a descrição
+            const descricaoAtualizada = await Descricao.update({
+                desc_fauna: desc_fauna,
+                desc_flora: desc_flora,
+                data_visita: data_visita,
+                usuarioId: usuarioId,
+            }, {
+				where: {
+					local_id: local_id
+				}
+			})
+            ;
 
-    let usuarioId;
-    try {
-      const decodedToken = verify(token, process.env.SECRET_JWT);
-      usuarioId = decodedToken.sub;
-    } catch (error) {
-      console.error("Erro ao verificar o token JWT:", error);
-      return res.status(401).json({ error: "Token JWT inválido" });
-    }
+            res.status(200).json({ descricaoAtualizada, localAtualizado });
+        } catch (error) {
+            console.error("Erro ao atualizar a descrição do local:", error);
+            res.status(500).json({ error: "Erro ao atualizar a descrição do local." });
+        }
+    });
+}
 
-    try {
-      const descricao = await Descricao.create({
-        local_id: local_id,
-        desc_fauna: desc_fauna,
-        desc_flora: desc_flora,
-        data_visita: data_visita,
-        usuarioId: usuarioId, // atribuindo o ID do usuário
-      });
-
-      const descricaoAtualizada = await descricao.save();
-      res.status(200).json(descricaoAtualizada);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ error: "Erro ao atualizar a descrição do local." });
-    }
-  }
 
   // Método para Apagar um local da Natureza [ok]
   async deletar(req, res) {
-    const { local_id } = req.params;
+    userId(req, res, async () => {
+      const usuarioId = req.usuarioId;
+      const { local_id } = req.params;
 
-    try {
-      const localExistente = await Local.findByPk(local_id);
+      try {
+        const localExistente = await Local.findOne({
+          where: { id: local_id, usuarioId: usuarioId },
+        });
 
-      if (!localExistente) {
-        return res.status(404).json({ error: "O local não existe." });
+        if (!localExistente) {
+          return res.status(404).json({ error: "O local não existe." });
+        }
+
+        await Local.destroy({ where: { id: local_id } });
+        res.status(204).end();
+      } catch (error) {
+        console.error(error, error);
+        res.status(500).json({ error: "Erro ao deletar o local." });
       }
-
-      await Local.destroy({ where: { id: local_id } });
-      res.status(204).end();
-    } catch (error) {
-      console.error(error, error);
-      res.status(500).json({ error: "Erro ao deletar o local." });
-    }
+    });
   }
 }
 
