@@ -1,10 +1,10 @@
 # Natureza365
 {proximas etapas:{
-    -Ajustar a rota de atualizar Local da Natureza,
-    -Segurança do usuário na rota get
+    
     -Limpar o código com middlewares e implementar o YUP
     -Inserir as validações necessárias das variaveis 
-    -Revisar os response http para tratamento de erro certo.
+    -Revisar response http para tratamento de erro certo.
+    -Swagger
 }}
 ## Rodar o repositório:
 
