@@ -1,10 +1,8 @@
 # Natureza365
 {proximas etapas:{
-    
-    -Limpar o código com middlewares e implementar o YUP
-    -Inserir as validações necessárias das variaveis 
+    - Novo middleware para validação dos Locais da Natureza.
     -Revisar response http para tratamento de erro certo.
-    -Swagger
+    -Swagger e seeders
 }}
 ## Rodar o repositório:
 
