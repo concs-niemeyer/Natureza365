@@ -1,7 +1,6 @@
 const { default: axios } = require("axios");
 const Descricao = require("../models/Descricao");
 const Local = require("../models/Local");
-const { verify } = require("jsonwebtoken");
 const { userId } = require("../middleware/userId");
 
 class LocalController {
@@ -24,7 +23,7 @@ class LocalController {
   async cadastrar(req, res) {
     userId(req, req, async () => {
         const usuarioId = req.usuarioId;
-        const { nome, local_endereco } = req.body;
+        const { nome, local_endereco, desc_flora, desc_fauna } = req.body;
 
         try {
             // Cria o novo local
@@ -34,11 +33,10 @@ class LocalController {
 				usuarioId: usuarioId
             });
 
-            // Cria uma descrição padrão para o novo local
             const novaDescricao = await Descricao.create({
                 local_id: novoLocal.id,
-                desc_fauna: "...defaultValue...",
-                desc_flora: "...defaultValue...",
+                desc_fauna,
+                desc_flora,
                 data_visita: new Date(),
                 usuarioId: usuarioId,
             });
@@ -74,9 +72,9 @@ class LocalController {
         if (response.data && response.data.length > 0) {
           const { lat, lon } = response.data[0];
           const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-          return res.status(201).json({ googleMapsLink, lat, lon });
+          return res.status(200).json({ googleMapsLink, lat, lon });
         } else {
-          return res.status(404).json({ error: "Local não encontrado" });
+          return res.status(404).json({ error: "Não foi possível encontrar o local." });
         }
       } catch (error) {
         console.error("Erro ao obter local:", error);
@@ -86,9 +84,9 @@ class LocalController {
   }
 
   //Método para atualizar um local da Natureza na tabela de Descrições [ok]
-  //Método para atualizar um local da Natureza na tabela de Locais da Natureza [ ? ]
+  //Método para atualizar um local da Natureza na tabela de Locais da Natureza [ ok ]
   async atualizar(req, res) {
-    userId(req, req, async () => {
+    userId(req, res, async () => {
         const usuarioId = req.usuarioId;
         const { local_id } = req.params;
         const { nome, local_endereco, desc_fauna, desc_flora, data_visita } = req.body;
@@ -107,16 +105,16 @@ class LocalController {
 
             // Atualiza a descrição
             const descricaoAtualizada = await Descricao.update({
-                desc_fauna: desc_fauna,
-                desc_flora: desc_flora,
-                data_visita: data_visita,
-                usuarioId: usuarioId,
+                desc_fauna,
+                desc_flora,
+                data_visita,
+                usuarioId,
+                local_id
             }, {
 				where: {
 					local_id: local_id
 				}
 			})
-            ;
 
             res.status(200).json({ descricaoAtualizada, localAtualizado });
         } catch (error) {

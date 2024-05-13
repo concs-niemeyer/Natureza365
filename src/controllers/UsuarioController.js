@@ -1,10 +1,10 @@
 const Usuario = require("../models/Usuario");
-const yup = require('yup')
+
 
 class UsuarioController {
 
   async cadastrar(req, res) {
-
+  
     const { nome, sexo, cpf, email, senha, data_nascimento } = req.body;
 
     try {
@@ -25,38 +25,34 @@ class UsuarioController {
     }
   }
 
-  async listar(req, res) {
 
-    try {
-      const usuarios = await Usuario.findAll();
+  // realizar a busca do id pelo token.
+  async atualizar(req, res) {
+      // Chamada do middleware para verificar o token JWT
+      userId(req, res, async () => {
+        req.usuarioId = req.params
+        const { nome, sexo, cpf, email, senha, data_nascimento } = req.body
 
-      res.json(usuarios);
-
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao obter usuarios." });
+        try {
+          const usuarioExistente = await Usuario.update({
+            nome,
+            sexo,
+            cpf,
+            email,
+            senha,
+            data_nascimento
+          }, {
+              where: {
+                id: req.usuarioId
+              }
+          })
+    
+          res.status(200).json({usuarioExistente})
+        } catch (error) {
+          return res.status(500).json({error: "Erro ao atualizar o usuário."})
+        }
+      })
     }
-  }
-
-  async listarUm(req, res) {
-
-    try {
-      const { id } = req.params;
-      const usuario = await Usuario.findByPk(id);
-
-      if (!usuario) {
-        return res.status(404).json({ error: "Usuário não encontrado!" });
-      }
-
-      res.json(usuario);
-
-    } catch (error) {
-      console.log(error.error);
-      res.status(500).json({
-        error: "Não foi possível listar o aluno especifico",
-        error: error,
-      });
-    }
-  }
 }
 
 module.exports = new UsuarioController();

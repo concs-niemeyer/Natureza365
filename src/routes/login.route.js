@@ -3,6 +3,20 @@ const LoginController = require('../controllers/LoginController')
 
 const loginRoutes = new Router()
 
-loginRoutes.post('/', LoginController.login)
+loginRoutes.post(
+    '/',
+      /*  
+            #swagger.tags = ['Login'],
+            #swagger.parameters['body'] = {
+                in: 'body',
+                description: 'Tela de login',
+                schema: {
+                  $email: "teste123@gmail.com",
+                  $senha: "teste123"
+            }
+        }
+    */
+    LoginController.login
+)
 
 module.exports = loginRoutes

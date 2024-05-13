@@ -22,15 +22,16 @@ class LoginController {
         return res
           .status(404)
           .json({
-            error: "Nenhum aluno corresponde a email e senha fornecido.",
+            error: "Nenhum usuário corresponde a email e senha fornecido.",
           });
       }
-
+/*
       const hashSenha = await compare(senha, usuario.senha);
 
-      if (hashSenha === false) {
-        return res.status(400).json({ mensagem: "Não encontrado essa conta" });
+       if (hashSenha === false) {
+         return res.status(400).json({ mensagem: "Conta não encontrada." });
       }
+*/
       const payload = {
         sub: usuario.id,
         email: usuario.email,
