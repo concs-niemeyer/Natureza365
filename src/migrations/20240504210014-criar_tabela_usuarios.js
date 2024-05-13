@@ -17,7 +17,7 @@ module.exports = {
       sexo: {
         allowNull: true,
         type: Sequelize.ENUM,
-        values: ['Feminino', 'Masculino', 'Outros']
+        values: ['feminino', 'masculino', 'outros']
       },
       cpf: {
         allowNull: false,
@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       data_nascimento:{
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       },
       createdAt: {

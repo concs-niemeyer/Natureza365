@@ -8,7 +8,7 @@ const Usuario = connection.define('usuarios', {
     },
     sexo: {
         type: DataTypes.ENUM,
-        values: ['Feminino', 'Masculino', 'Outros']
+        values: ['feminino', 'masculino', 'outros']
     },
     cpf: {
         type: DataTypes.STRING,
