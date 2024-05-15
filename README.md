@@ -1,61 +1,35 @@
-# Natureza365
+# Natureza365 🌿🌞
 
-## Rodar o repositório:
+## Rodando o Repositório: 🏃‍♂️
 
-### Na primeira vez é necessário instalar as dependencias:
-1. `npm install`
-2. Se for em ambiente local: `npm install --dev`
-3. Faça uma cópia do arquivo e altere as variáveis de ambiente `cp .env_example .env`
+### Instalação das Dependências: 🚀
+Para começar, assegure-se de ter todas as dependências instaladas. Na primeira execução, siga estes passos:
+1. Execute `npm install`.
+2. Para ambiente local, execute também `npm install --dev`.
+3. Faça uma cópia do arquivo de exemplo de variáveis de ambiente: `cp .env_example .env`.
+4. Certifique-se de revisar e atualizar as variáveis de ambiente necessárias no arquivo `.env` e no arquivo `./config/config.json`.
 
-### Para rodar o repositório em ambiente local
-1. `npm run start:dev`
+## Trabalhando com Migrations: 🛠️
 
-## Trabalhando com migrations:
+### Configurando o Banco de Dados: 🗃️
+Antes de começar, crie um novo banco de dados PostgreSQL chamado 'natureza365'.
 
-### Crie o banco de dados com nome NATUREZA365 no POSTGRESQL
+### Executando Migrations: 🔄
+Para atualizar o esquema do banco de dados, você pode escolher entre duas opções:
+1. Execute `sequelize db:migrate`.
+2. Ou, se preferir, `npx sequelize db:migrate`.
 
-### Criar uma migration
-1. `sequelize migration:generate --name nome_da_migracao`
-2. `npx sequelize-cli migration:generate --name criar_tabela_alunos`
+## Trabalhando com Seeders: 🌱
 
-### Rodar uma migration. Opções:
-1. Opção nº 1: `sequelize db:migrate`
-2. Opção nº 2: `npx sequelize db:migrate`
+### Inserindo Dados Iniciais: 🌱
+Para popular o banco de dados com dados iniciais, execute:
+1. `sequelize db:seed:all`.
+2. Ou, alternativamente, `npx sequelize db:seed:all`.
 
-### Reverter a última migration:
-1. `sequelize-cli db:migrate:undo`
-2. `npx sequelize-cli db:migrate:undo`
+## Executando o Repositório em Ambiente Local: 🖥️
+Para iniciar o servidor localmente,
+execute `npm run start:dev`.
 
-## Trabalhando com Seeders
-
-### Criar valores iniciais no banco de dados:
-1. `sequelize db:seed:all`
-2. `npx sequelize db:seed:all`
-
-## Trabalhando com Documentação:
-
-### Gerar o documento do Swagger.json usando o AutoGen
-
-`npm run swagger`
-
-## Documentação do Sequelize:
-https://sequelize.org/docs/v6/core-concepts/model-basics/
-
-## Novas Bibliotecas utilizadas:
-
-### instalar o sequelize
-`npm install sequelize` 
-### instalar o driver do PostgreSQL
-`npm install pg` 
-### instalar o CLI do sequelize
-`npm install -g sequelize-cli` 
-### instalar o dotenv
-`npm install dotenv`
-### instalar o JsonWebToken ( JWT )
-`npm install jsonwebtoken`
-### instalar o axios
-`npm install axios`
-### instalar o Swagger UI
-`npm install swagger-ui-express`
-### instalar o Swagger AutoGen para gerar o documento Swagger de forma automatica.
-`npm install swagger-autogen`
+## Documentação da API com Swagger: 📚
+Explore a documentação detalhada da API usando o Swagger. Acesse [localhost:3000/docs](http://localhost:3000/docs) para visualizar endpoints, parâmetros e exemplos de uso.
+:
