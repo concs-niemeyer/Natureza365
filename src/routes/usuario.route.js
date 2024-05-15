@@ -48,7 +48,7 @@ usuarioRoutes.put(
             }
         */
 
-    validarUsuario(usuarioSchema),
+  //  validarUsuario(usuarioSchema),
 
     UsuarioController.atualizar
 )

@@ -35,6 +35,8 @@ const Usuario = connection.define('usuarios', {
 Usuario.beforeSave(async (usuario) => {
     usuario.senha = await hash(usuario.senha, 8)
     return usuario
+
 })
+
 
 module.exports = Usuario

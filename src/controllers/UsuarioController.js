@@ -1,5 +1,5 @@
 const Usuario = require("../models/Usuario");
-
+const { userId }= require('../middleware/userId')
 
 class UsuarioController {
 
@@ -30,11 +30,12 @@ class UsuarioController {
   async atualizar(req, res) {
       // Chamada do middleware para verificar o token JWT
       userId(req, res, async () => {
-        req.usuarioId = req.params
+        const usuarioId = req.params
+        console.log(usuarioId)
         const { nome, sexo, cpf, email, senha, data_nascimento } = req.body
 
         try {
-          const usuarioExistente = await Usuario.update({
+          await Usuario.update({
             nome,
             sexo,
             cpf,
@@ -45,9 +46,16 @@ class UsuarioController {
               where: {
                 id: req.usuarioId
               }
-          })
+          }
+        )
     
-          res.status(200).json({usuarioExistente})
+          res.status(200).json({ 
+            nome,
+            sexo,
+            cpf,
+            email,
+            senha,
+            data_nascimento})
         } catch (error) {
           return res.status(500).json({error: "Erro ao atualizar o usuário."})
         }
