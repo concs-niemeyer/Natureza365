@@ -32,4 +32,3 @@ execute `npm run start:dev`.
 
 ## Documentação da API com Swagger: 📚
 Explore a documentação detalhada da API usando o Swagger. Acesse [localhost:3000/docs](http://localhost:3000/docs) para visualizar endpoints, parâmetros e exemplos de uso.
-:
