@@ -7,9 +7,7 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "securityDefinitions": {
     "apiKeyAuth": {
       "type": "apiKey",
@@ -21,9 +19,7 @@
   "paths": {
     "/login/": {
       "post": {
-        "tags": [
-          "Login"
-        ],
+        "tags": ["Login"],
         "description": "",
         "parameters": [
           {
@@ -42,10 +38,7 @@
                   "example": "teste123"
                 }
               },
-              "required": [
-                "email",
-                "senha"
-              ]
+              "required": ["email", "senha"]
             }
           }
         ],
@@ -67,9 +60,7 @@
     },
     "/usuario/": {
       "post": {
-        "tags": [
-          "Usuário"
-        ],
+        "tags": ["Usuário"],
         "description": "",
         "parameters": [
           {
@@ -104,12 +95,7 @@
                   "example": "1996-12-15"
                 }
               },
-              "required": [
-                "nome",
-                "cpf",
-                "email",
-                "senha"
-              ]
+              "required": ["nome", "cpf", "email", "senha"]
             }
           }
         ],
@@ -166,12 +152,7 @@
                   "example": "1996-12-15"
                 }
               },
-              "required": [
-                "nome",
-                "cpf",
-                "email",
-                "senha"
-              ]
+              "required": ["nome", "cpf", "email", "senha"]
             }
           }
         ],
@@ -193,9 +174,7 @@
     },
     "/local/": {
       "post": {
-        "tags": [
-          "Local da Natureza"
-        ],
+        "tags": ["Local da Natureza"],
         "description": "",
         "parameters": [
           {
@@ -227,10 +206,7 @@
                   "example": "não tem cachorro do mato"
                 }
               },
-              "required": [
-                "nome",
-                "local_endereco"
-              ]
+              "required": ["nome", "local_endereco"]
             }
           }
         ],
@@ -273,9 +249,7 @@
     },
     "/local/{local_id}": {
       "put": {
-        "tags": [
-          "Local da Natureza"
-        ],
+        "tags": ["Local da Natureza"],
         "description": "",
         "parameters": [
           {
@@ -317,11 +291,7 @@
                   "example": "não tem cachorro do mato"
                 }
               },
-              "required": [
-                "nome",
-                "local_endereco",
-                "data_visita"
-              ]
+              "required": ["nome", "local_endereco", "data_visita"]
             }
           }
         ],

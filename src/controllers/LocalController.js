@@ -22,32 +22,32 @@ class LocalController {
   // Método para cadastrar um Local da Natureza [ ok ]
   async cadastrar(req, res) {
     userId(req, req, async () => {
-        const usuarioId = req.usuarioId;
-        const { nome, local_endereco, desc_flora, desc_fauna } = req.body;
+      const usuarioId = req.usuarioId;
+      const { nome, local_endereco, desc_flora, desc_fauna } = req.body;
 
-        try {
-            // Cria o novo local
-            const novoLocal = await Local.create({
-                nome: nome,
-                local_endereco: local_endereco,
-				usuarioId: usuarioId
-            });
+      try {
+        // Cria o novo local
+        const novoLocal = await Local.create({
+          nome: nome,
+          local_endereco: local_endereco,
+          usuarioId: usuarioId,
+        });
 
-            const novaDescricao = await Descricao.create({
-                local_id: novoLocal.id,
-                desc_fauna,
-                desc_flora,
-                data_visita: new Date(),
-                usuarioId: usuarioId,
-            });
+        const novaDescricao = await Descricao.create({
+          local_id: novoLocal.id,
+          desc_fauna,
+          desc_flora,
+          data_visita: new Date(),
+          usuarioId: usuarioId,
+        });
 
-            res.status(201).json({ local: novoLocal, descricao: novaDescricao });
-        } catch (error) {
-            console.error("Erro ao cadastrar o local:", error);
-            res.status(500).json({ error: "Erro ao cadastrar o local." });
-        }
+        res.status(201).json({ local: novoLocal, descricao: novaDescricao });
+      } catch (error) {
+        console.error("Erro ao cadastrar o local:", error);
+        res.status(500).json({ error: "Erro ao cadastrar o local." });
+      }
     });
-}
+  }
 
   // Método para mapear um local do Usuário pelo local_endereco [  ]
   async mapear(req, res) {
@@ -74,7 +74,9 @@ class LocalController {
           const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
           return res.status(200).json({ googleMapsLink, lat, lon });
         } else {
-          return res.status(404).json({ error: "Não foi possível encontrar o local." });
+          return res
+            .status(404)
+            .json({ error: "Não foi possível encontrar o local." });
         }
       } catch (error) {
         console.error("Erro ao obter local:", error);
@@ -87,43 +89,51 @@ class LocalController {
   //Método para atualizar um local da Natureza na tabela de Locais da Natureza [ ok ]
   async atualizar(req, res) {
     userId(req, res, async () => {
-        const usuarioId = req.usuarioId;
-        const { local_id } = req.params;
-        const { nome, local_endereco, desc_fauna, desc_flora, data_visita } = req.body;
+      const usuarioId = req.usuarioId;
+      const { local_id } = req.params;
+      const { nome, local_endereco, desc_fauna, desc_flora, data_visita } =
+        req.body;
 
-        try {
-            // Atualiza o local
-            const localAtualizado = await Local.update({
-                nome: nome,
-                local_endereco: local_endereco,
-				usuarioId: usuarioId
-            }, {
-                where: {
-                    id: local_id
-                }
-            });
+      try {
+        // Atualiza o local
+        const localAtualizado = await Local.update(
+          {
+            nome: nome,
+            local_endereco: local_endereco,
+            usuarioId: usuarioId,
+          },
+          {
+            where: {
+              id: local_id,
+            },
+          }
+        );
 
-            // Atualiza a descrição
-            const descricaoAtualizada = await Descricao.update({
-                desc_fauna,
-                desc_flora,
-                data_visita,
-                usuarioId,
-                local_id
-            }, {
-				where: {
-					local_id: local_id
-				}
-			})
+        // Atualiza a descrição
+        const descricaoAtualizada = await Descricao.update(
+          {
+            desc_fauna,
+            desc_flora,
+            data_visita,
+            usuarioId,
+            local_id,
+          },
+          {
+            where: {
+              local_id: local_id,
+            },
+          }
+        );
 
-            res.status(200).json({ descricaoAtualizada, localAtualizado });
-        } catch (error) {
-            console.error("Erro ao atualizar a descrição do local:", error);
-            res.status(500).json({ error: "Erro ao atualizar a descrição do local." });
-        }
+        res.status(200).json({ descricaoAtualizada, localAtualizado });
+      } catch (error) {
+        console.error("Erro ao atualizar a descrição do local:", error);
+        res
+          .status(500)
+          .json({ error: "Erro ao atualizar a descrição do local." });
+      }
     });
-}
-
+  }
 
   // Método para Apagar um local da Natureza [ok]
   async deletar(req, res) {

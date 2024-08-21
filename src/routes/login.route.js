@@ -1,11 +1,11 @@
-const { Router } = require('express') 
-const LoginController = require('../controllers/LoginController')
+const { Router } = require("express");
+const LoginController = require("../controllers/LoginController");
 
-const loginRoutes = new Router()
+const loginRoutes = new Router();
 
 loginRoutes.post(
-    '/',
-      /*  
+  "/",
+  /*  
             #swagger.tags = ['Login'],
             #swagger.parameters['body'] = {
                 in: 'body',
@@ -16,7 +16,7 @@ loginRoutes.post(
             }
         }
     */
-    LoginController.login
-)
+  LoginController.login
+);
 
-module.exports = loginRoutes
+module.exports = loginRoutes;
