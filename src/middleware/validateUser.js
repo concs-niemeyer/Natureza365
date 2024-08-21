@@ -54,7 +54,7 @@ const validarUsuario = (schema) => async (req, res, next) => {
 		return res.status(500).json({ error: "Não foi possível cadastrar seu CPF." });
 	}
 
-
+// Validar email do usuário
 	function validarEmail(email) {
 		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return regex.test(email);
