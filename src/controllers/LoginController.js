@@ -19,13 +19,11 @@ class LoginController {
       const usuario = await Usuario.findOne({ where: { email } });
 
       if (!usuario) {
-        return res
-          .status(404)
-          .json({
-            error: "Nenhum usuário corresponde a email e senha fornecido.",
-          });
+        return res.status(404).json({
+          error: "Nenhum usuário corresponde a email e senha fornecido.",
+        });
       }
-/*
+      /*
       const hashSenha = await compare(senha, usuario.senha);
 
        if (hashSenha === false) {

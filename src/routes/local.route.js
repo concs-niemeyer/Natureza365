@@ -1,19 +1,19 @@
-const { Router } = require('express')
-const { auth } = require('../middleware/auth')
+const { Router } = require("express");
+const { auth } = require("../middleware/auth");
 
-const LocalController = require('../controllers/LocalController')
-const localSchema = require('../schemas/localSchema')
-const validarLocal = require('../middleware/validateLocal')
-const validarDescricao = require('../middleware/validateDescription')
-const descricaoSchema = require('../schemas/descricaoSchema')
+const LocalController = require("../controllers/LocalController");
+const localSchema = require("../schemas/localSchema");
+const validarLocal = require("../middleware/validateLocal");
+const validarDescricao = require("../middleware/validateDescription");
+const descricaoSchema = require("../schemas/descricaoSchema");
 
-const localRoutes = new Router()
+const localRoutes = new Router();
 
 localRoutes.post(
-    '/',
-    auth,
-    validarLocal(localSchema),
-     /*  
+  "/",
+  auth,
+  validarLocal(localSchema),
+  /*  
             #swagger.tags = ['Local da Natureza'],
             #swagger.parameters['body'] = {
                 in: 'body',
@@ -27,20 +27,16 @@ localRoutes.post(
             }
         }
     */
-    LocalController.cadastrar
-)
+  LocalController.cadastrar
+);
 
-localRoutes.get(
-    '/',
-    auth,
-    LocalController.listar
-)
+localRoutes.get("/", auth, LocalController.listar);
 
 localRoutes.put(
-    '/:local_id',
-    auth,
-    validarDescricao(descricaoSchema),
-    /*
+  "/:local_id",
+  auth,
+  validarDescricao(descricaoSchema),
+  /*
              #swagger.tags = ['Local da Natureza'],
             #swagger.parameters['body'] = {
                 in: 'body',
@@ -55,20 +51,11 @@ localRoutes.put(
             }
         }.
     */
-    LocalController.atualizar
+  LocalController.atualizar
+);
 
-)
+localRoutes.delete("/:local_id", auth, LocalController.deletar);
 
-localRoutes.delete(
-    '/:local_id',
-    auth,
-    LocalController.deletar
-)
+localRoutes.get("/:local_id/maps", auth, LocalController.mapear);
 
-localRoutes.get(
-    '/:local_id/maps',
-    auth,
-    LocalController.mapear
-)
-
-module.exports = localRoutes
+module.exports = localRoutes;
