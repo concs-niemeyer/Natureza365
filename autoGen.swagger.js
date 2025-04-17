@@ -3,7 +3,7 @@ const swaggerAutogen = require("swagger-autogen")();
 const doc = {
   info: {
     title: "NATUREZA 365",
-    description: "API do projeto avaliativo do módulo 01",
+    description: "API de locais da Natureza",
     version: "1.0.0",
   },
   host: "localhost:3000",
