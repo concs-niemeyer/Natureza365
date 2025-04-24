@@ -4,7 +4,7 @@
     "password": "${DB_PASSWORD}",
     "database": "${DATABASE}",
     "host": "${HOST}",
-    "dialect": "${DIALECT}"
+    "dialect": "postgres"
   }  ,
   "test": {
     "username": "postgres",
@@ -18,7 +18,7 @@
     "password": "${DB_PASSWORD}",
     "database": "${DATABASE}",
     "host": "${HOST}",
-    "dialect": "${DIALECT}"
+    "dialect": "postgres"
   }
 
 }
