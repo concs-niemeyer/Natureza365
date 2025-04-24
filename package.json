@@ -6,7 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "swagger": "node ./autoGen.swagger.js"
+    "swagger": "node ./autoGen.swagger.js",
+    "db:migrate": "npx sequelize db:migrate",
+    "db:migrate:undo": "npx sequelize db:migrate:undo:all",
+    "db:seed": "npx sequelize db:seed:all",
+    "db:seed:undo": "npx sequelize db:seed:undo:all",
+    "start:with-migrations": "npm run db:migrate && npm run db:seed && npm run start"
   },
   "keywords": [],
   "author": "",
