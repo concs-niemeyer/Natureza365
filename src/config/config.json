@@ -5,20 +5,5 @@
     "database": "${DATABASE}",
     "host": "${HOST}",
     "dialect": "${DIALECT}"
-  },
-  "test": {
-    "username": "postgres",
-    "password": null,
-    "database": "natureza365",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  },
-  "production": {
-    "username": "postgres",
-    "password": null,
-    "database": "natureza365",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
   }
-
 }
