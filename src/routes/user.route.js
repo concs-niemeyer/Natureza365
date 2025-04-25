@@ -6,13 +6,14 @@ const validarUser = require("../middleware/validateUser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./doc.swagger.json");
 const {hasPermission} = require("../middleware/hasPermission")
+const verifyCaptcha = require("../middleware/verifyCaptcha");
 const router = new Router();
 
 
 router.get("/", hasPermission(["ler_usuarios"]), userController.findAll);
 router.get("/:id", hasPermission(["ler_usuarios"]), userController.findById);
 router.post(
-  "/", hasPermission(["criar_usuario"]),
+  "/", verifyCaptcha ,hasPermission(["criar_usuario"]),
   validarUser(userSchema),
   /*  
             #swagger.tags = ['Usuário'],
