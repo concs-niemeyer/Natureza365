@@ -18,7 +18,7 @@ const User = connection.define('users', {
         type: DataTypes.STRING,
         unique: true
     },
-    senha: {
+    password: {
         type: DataTypes.STRING,
     },
 	cpf: {

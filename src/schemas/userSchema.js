@@ -6,7 +6,7 @@ const userSchema = yup.object().shape({
   cpf: yup.string().length(11).required(),
   email: yup.string().email().required(),
   sexo: yup.string().nullable(),
-  senha: yup.string().required(),
+  password: yup.string().required(),
   data_nascimento: yup.date().required(),
   cep: yup.string().required(),
   endereco: yup.string().required()		

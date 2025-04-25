@@ -26,7 +26,7 @@ module.exports = {
 			type: Sequelize.STRING,
 			unique: true			// Validação no BD para email único
 		  },
-		  senha: {
+		  password: {
 			type: Sequelize.STRING,
 			allowNull: false
 		  },

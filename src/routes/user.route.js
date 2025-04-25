@@ -25,7 +25,7 @@ router.post(
                   sexo: "feminino, masculino ou outros",
                   $cpf: "10987654321",  
                   $email: "teste@gmail.com",
-                  $senha: "123",
+                  $password: "123",
                   data_nascimento: "1996-12-15",
             }
         }
@@ -44,7 +44,7 @@ router.put(
                     sexo: "feminino, masculino ou outros",
                     $cpf: "10987654321",  
                     $email: "teste@gmail.com",
-                    $senha: "123",
+                    $password: "123",
                     data_nascimento: "1996-12-15",
                 }
             }

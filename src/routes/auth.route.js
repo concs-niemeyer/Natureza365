@@ -9,10 +9,10 @@ const Permission = require('../models/Permission');
 
 router.post('/', async (req, res) => {
   try {
-    const { email, senha } = req.body;
+    const { email, password } = req.body;
 
-    if (!email || !senha) {
-      return res.status(400).send('Email e senha são obrigatórios');
+    if (!email || !password) {
+      return res.status(400).send('Email e password são obrigatórios');
     }
     
 
@@ -29,10 +29,10 @@ router.post('/', async (req, res) => {
       return res.status(404).send('Usuário não encontrado');
     }
 
-    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+    const passwordCorreta = await bcrypt.compare(password, usuario.password);
 
-    if (!senhaCorreta) {
-      return res.status(401).send('Senha incorreta');
+    if (!passwordCorreta) {
+      return res.status(401).send('password incorreta');
     }
 
     const payload = { 

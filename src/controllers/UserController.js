@@ -30,7 +30,7 @@ class UserController {
     // Método criar um novo usuário
     async createNewUser(request, response) {
         try {
-          const { email, name, senha, sexo, cpf, data_nascimento, cep, endereco, captchaValue } = request.body;
+          const { email, name, password, sexo, cpf, data_nascimento, cep, endereco, captchaValue } = request.body;
       
           // Verificação do CAPTCHA
           const isHuman = await verifyCaptcha(captchaValue);
@@ -38,17 +38,17 @@ class UserController {
             return response.status(400).send({ message: "Falha na verificação do reCAPTCHA" });
           }
       
-          if (!email || !senha || !sexo || !cpf || !data_nascimento || !cep || !endereco) {
+          if (!email || !password || !sexo || !cpf || !data_nascimento || !cep || !endereco) {
             return response.status(400).send({ message: "Todos os campos são obrigatórios" });
           }
       
           const sexoLower = sexo.toLowerCase();
-          const senhaEncriptada = await bcrypt.hash(senha, 10);
+          const passwordEncript = await bcrypt.hash(password, 10);
       
           const data = await User.create({
             email,
             name,
-            senha: senhaEncriptada,
+            password: passwordEncript,
             sexo: sexoLower,
             cpf,
             data_nascimento,
@@ -68,7 +68,7 @@ class UserController {
     async updateUser(request, response) {
         try {
             const { id } = request.params;
-            const { email, name, senha, data_nascimento, cep,  endereco } = request.body;
+            const { email, name, password, data_nascimento, cep,  endereco } = request.body;
 
             const user = await User.findByPk(id);
             if (!user) {
@@ -78,7 +78,7 @@ class UserController {
             const data = await user.update({
                 email,
                 name,
-                senha,
+                password,
                 data_nascimento,
 				cep,
                 endereco
