@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require('bcrypt');
 const UserRole = require("../models/UserRole");
+const verifyCaptcha = require("../middleware/verifyCaptcha");
 
 class UserController {
     // Método achar todos os usuários
@@ -29,32 +30,39 @@ class UserController {
     // Método criar um novo usuário
     async createNewUser(request, response) {
         try {
-            const { email, name, senha, sexo, cpf, data_nascimento, cep, endereco } = request.body;
-            if (!email || !senha || !sexo || !cpf || !data_nascimento || !cep || !endereco) {
-                return response.status(400).send({ message: "Todos os campos são obrigatórios" });
-            }
-            // Transformar sexo em lowercase
-            const sexoLower = sexo.toLowerCase();
-
-            const senhaEncriptada = await bcrypt.hash(senha, 10);
-
-            const data = await User.create({
-                email,
-                name,
-                senha: senhaEncriptada,
-                sexo: sexoLower,
-                cpf,
-                data_nascimento,
-				cep,
-                endereco
-            });
-
-            return response.status(201).send(data);
+          const { email, name, senha, sexo, cpf, data_nascimento, cep, endereco, captchaValue } = request.body;
+      
+          // Verificação do CAPTCHA
+          const isHuman = await verifyCaptcha(captchaValue);
+          if (!isHuman) {
+            return response.status(400).send({ message: "Falha na verificação do reCAPTCHA" });
+          }
+      
+          if (!email || !senha || !sexo || !cpf || !data_nascimento || !cep || !endereco) {
+            return response.status(400).send({ message: "Todos os campos são obrigatórios" });
+          }
+      
+          const sexoLower = sexo.toLowerCase();
+          const senhaEncriptada = await bcrypt.hash(senha, 10);
+      
+          const data = await User.create({
+            email,
+            name,
+            senha: senhaEncriptada,
+            sexo: sexoLower,
+            cpf,
+            data_nascimento,
+            cep,
+            endereco
+          });
+      
+          return response.status(201).send(data);
         } catch (error) {
-            console.log(error.message);
-            return response.status(400).send({ message: "O usuário não pôde ser criado!" });
+          console.log(error.message);
+          return response.status(400).send({ message: "O usuário não pôde ser criado!" });
         }
-    }
+      }
+      
 
     // Método Atualizar usuário // Não pode alterar o CPF do usuário
     async updateUser(request, response) {
