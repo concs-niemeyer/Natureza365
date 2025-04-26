@@ -4,8 +4,9 @@ const yup = require("yup");
 const localSchema = yup.object().shape({
   name: yup.string().required(),
   address: yup.string().required(),	//CEP, complemento... não sei se é a melhor forma.
-  cep: yup.string().nullable(),
   userId: yup.number().integer(),
+  cep: yup.string(),
+  numero: yup.string(),
   lat: yup.string(),		
   lon: yup.string()
 });
