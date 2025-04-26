@@ -1,11 +1,18 @@
 const { compare } = require("bcrypt"); // Certifique-se de que bcrypt está instalado
 const { sign } = require("jsonwebtoken");
 const User = require("../models/User");
+const verifyCaptcha = require("../middleware/verifyCaptcha");
 
 class LoginController {
   async login(req, res) {
     try {
-      const { email, password } = req.body;
+      const { email, password, captchaValue } = req.body;
+
+       // Verificação do CAPTCHA
+       const isHuman = await verifyCaptcha(captchaValue);
+       if (!isHuman) {
+         return response.status(400).send({ message: "Falha na verificação do reCAPTCHA" });
+       }
 
       if (!email) {
         return res.status(400).json({ error: "O email é obrigatório" });

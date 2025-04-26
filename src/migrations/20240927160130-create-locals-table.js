@@ -15,7 +15,10 @@ module.exports = {
 		  name: {
 			type: Sequelize.STRING
 		  },
-		  localidade: {
+		  address: {
+			type: Sequelize.STRING
+		  }, 
+		  cep: {
 			type: Sequelize.STRING
 		  },
 		  userId: {

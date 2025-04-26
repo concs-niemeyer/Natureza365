@@ -193,7 +193,7 @@
                   "type": "string",
                   "example": "Nome do local"
                 },
-                "localidade": {
+                "address": {
                   "type": "string",
                   "example": "Rua, complemento, bairro"
                 },
@@ -206,7 +206,7 @@
                   "example": "não tem cachorro do mato"
                 }
               },
-              "required": ["nome", "localidade"]
+              "required": ["nome", "address"]
             }
           }
         ],
@@ -274,7 +274,7 @@
                   "type": "string",
                   "example": "Nome do local"
                 },
-                "localidade": {
+                "address": {
                   "type": "string",
                   "example": "Rua, complemento, bairro"
                 },
@@ -291,7 +291,7 @@
                   "example": "não tem cachorro do mato"
                 }
               },
-              "required": ["nome", "localidade", "data_visita"]
+              "required": ["nome", "address", "data_visita"]
             }
           }
         ],

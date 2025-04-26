@@ -22,26 +22,27 @@ class LocalController {
     userId(req, req, async () => {
       const user_Id = req.userId;
       //console.log(user_Id,"<<ID_USUÁRIO>>")
-      const { name, localidade, desc_flora, desc_fauna } = req.body;
+      const { name, address, cep, desc_flora, desc_fauna } = req.body;
 
       try {
         // Cria o novo local
         const novoLocal = await Local.create({
           name,
-          localidade,
+          address,
+          cep,
           userId: user_Id,
         });
        // console.log(novoLocal, "<<NOVO_LOCAL>>");
-        const novaDescricao = await Description.create({
+        const novaDescription = await Description.create({
+          userId: user_Id,
           local_id: novoLocal.id,
+          data_visita: new Date(),
           desc_fauna,
           desc_flora,
-          data_visita: new Date(),
-          userId: user_Id,
         });
-        //console.log(novaDescricao, "<<NOVA_DESCRIÇÃO>>");
+        //console.log(novaDescription, "<<NOVA_DESCRIÇÃO>>");
 
-        res.status(201).json({ local: novoLocal, descricao: novaDescricao });
+        res.status(201).json({ local: novoLocal, description: novaDescription });
       } catch (error) {
         console.error("Erro ao cadastrar o local:", error);
         res.status(500).json({ error: "Erro ao cadastrar o local." });
@@ -49,7 +50,7 @@ class LocalController {
     });
   }
 
-  // Método para mapear um local do Usuário pelo localidade [ incompleto ]
+  // Método para mapear um local do Usuário pelo address [ incompleto ]
   async mapear(req, res) {
     // Chamada do middleware para verificar o token JWT
     userId(req, res, async () => {
@@ -62,10 +63,10 @@ class LocalController {
         const local = await Local.findOne({
           where: { id: local_id, userId: userId },
         });
-        //console.log(local.localidade) testando o endereço do local
+        //console.log(local.address) testando o endereço do local
         const response = await axios.get(
           `https://nominatim.openstreetmap.org/search.php?q=${encodeURIComponent(
-            local.localidade
+            local.address
           )}&format=json`
         );
 
@@ -89,14 +90,14 @@ class LocalController {
   async atualizar(req, res) {
     const { userId } = req.body; // Extraindo o userId do corpo da requisição
     const { local_id } = req.params;
-    const { name, localidade, descricao, lat, lon, CEP } = req.body;
+    const { name, address, description, lat, lon, CEP } = req.body;
 
     try {
       // Atualiza o nome e o endereço na tabela de Locais da Natureza
       const [localAtualizado] = await Local.update(
         {
           name,
-          localidade,
+          address,
         },
         {
           where: {

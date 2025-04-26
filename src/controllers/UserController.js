@@ -7,7 +7,7 @@ class UserController {
     // Método achar todos os usuários
     async findAll(request, response) {
         const data = await User.findAll({
-            attributes: ['id', 'name', 'email', 'data_nascimento', 'endereco'],
+            attributes: ['id', 'name', 'email', 'data_nascimento'],
             include: { association: 'roles', attributes: ['id', 'description'] }
         });
         const total = await User.count();
@@ -18,7 +18,7 @@ class UserController {
     // Método achar usuário por ID
     async findById(request, response) {
         const { id } = request.params;
-        const data = await User.findByPk(id, { attributes: ['id', 'name', 'email', 'data_nascimento', 'endereco'] });
+        const data = await User.findByPk(id, { attributes: ['id', 'name', 'email', 'data_nascimento'] });
 
         if (!data) {
             return response.status(404).send({ message: "Usuário não encontrado" });
@@ -30,7 +30,7 @@ class UserController {
     // Método criar um novo usuário
     async createNewUser(request, response) {
         try {
-          const { email, name, password, sexo, cpf, data_nascimento, cep, endereco, captchaValue } = request.body;
+          const { email, name, password, sexo, cpf, data_nascimento, captchaValue } = request.body;
       
           // Verificação do CAPTCHA
           const isHuman = await verifyCaptcha(captchaValue);
@@ -38,7 +38,7 @@ class UserController {
             return response.status(400).send({ message: "Falha na verificação do reCAPTCHA" });
           }
       
-          if (!email || !password || !sexo || !cpf || !data_nascimento || !cep || !endereco) {
+          if (!email || !password || !sexo || !cpf || !data_nascimento ) {
             return response.status(400).send({ message: "Todos os campos são obrigatórios" });
           }
       
@@ -52,8 +52,6 @@ class UserController {
             sexo: sexoLower,
             cpf,
             data_nascimento,
-            cep,
-            endereco
           });
       
           return response.status(201).send(data);
@@ -68,7 +66,7 @@ class UserController {
     async updateUser(request, response) {
         try {
             const { id } = request.params;
-            const { email, name, password, data_nascimento, cep,  endereco } = request.body;
+            const { email, name, password } = request.body;
 
             const user = await User.findByPk(id);
             if (!user) {
@@ -79,9 +77,6 @@ class UserController {
                 email,
                 name,
                 password,
-                data_nascimento,
-				cep,
-                endereco
             });
 
             return response.status(200).send(data);

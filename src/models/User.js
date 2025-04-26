@@ -28,12 +28,6 @@ const User = connection.define('users', {
 	data_nascimento: {
 		type: DataTypes.DATE
 	},
-	cep: {
-		type: DataTypes.STRING
-	},
-	endereco:{
-		type: DataTypes.STRING
-	},
 	isLogged:{
 		type: DataTypes.BOOLEAN
 	},

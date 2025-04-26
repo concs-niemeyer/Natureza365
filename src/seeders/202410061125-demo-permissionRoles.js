@@ -102,7 +102,7 @@ module.exports = {
             },
             {
                 id: 15,
-				permissionId: "14", // adicionar_pepel_usuario
+				permissionId: "14", // adicionar_papel_usuario
 				roleId: "1",		// admin
                 createdAt: new Date(),
                 updatedAt: new Date(),
@@ -111,6 +111,27 @@ module.exports = {
                 id: 16,
 				permissionId: "15",	// deletar_usuario
 				roleId: "1",		// admin
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                id: 17,
+				permissionId: "5",	// ler_usuarios
+				roleId: "2",		// user
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                id: 18,
+				permissionId: "7",	// ler_locais
+				roleId: "2",		// user
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                id: 19,
+				permissionId: "7",	// ler_locais
+				roleId: "3",		// guest
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }

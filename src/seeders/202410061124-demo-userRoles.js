@@ -20,24 +20,10 @@ module.exports = {
             {
                 id: 3,
 				userId: "3",
-				roleId: "2",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            },
-            {
-                id: 4,
-				userId: "4",
-				roleId: "2",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            },
-            {
-				id: 5,
-				userId: "5",
 				roleId: "3",
                 createdAt: new Date(),
                 updatedAt: new Date(),
-		    }
+            },
         ]);
     },
 

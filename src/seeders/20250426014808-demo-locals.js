@@ -5,14 +5,16 @@ module.exports = {
       [
         {
           name: "Trilha da Lagoinha do Leste",
-          localidade: "Lagoinha do Leste - Florianópolis",
+          address: "Lagoinha do Leste - Florianópolis",
+          cep: "",
           userId: "1",
           createdAt: "2024-05-13",
           updatedAt: "2024-05-13",
         },
         {
           name: "Trilha Pedra do Teleǵrafo",
-          localidade: "Pedra do Telégrafo - Rio de Janeiro",
+          address: "Pedra do Telégrafo - Rio de Janeiro",
+          cep:"",
           userId: "1",
           createdAt: "2024-05-13",
           updatedAt: "2024-05-13",

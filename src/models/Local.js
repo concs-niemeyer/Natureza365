@@ -7,7 +7,10 @@ const Local = connection.define("locals", {
     type: DataTypes.STRING,
   },
   // LOCALIDADE (Endereço) [CEP, complemento...]
-  localidade: {
+  address: {
+    type: DataTypes.TEXT,
+  },
+  cep: {
     type: DataTypes.STRING,
   },
   userId: {

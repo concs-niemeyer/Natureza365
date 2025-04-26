@@ -18,7 +18,7 @@ localRoutes.post(
                 Description: 'Adiciona um novo local da natureza',
                 schema: {
                   $name: "Nome do local",
-                  $localidade: "Rua, complemento, bairro",  
+                  $address: "Rua, complemento, bairro",  
                   desc_flora: "tem flores silvestres",
                   desc_fauna: "não tem cachorro do mato",
                   
@@ -40,7 +40,7 @@ localRoutes.put(
                 description: 'Adiciona um novo local da natureza',
                 schema: {
                   $nome: "Nome do local",
-                  $localidade: "Rua, complemento, bairro",
+                  $address: "Rua, complemento, bairro",
                   $data_visita: "2024-04-20",  
                   desc_flora: "tem flores silvestres",
                   desc_fauna: "não tem cachorro do mato",

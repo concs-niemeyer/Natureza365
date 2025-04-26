@@ -17,7 +17,7 @@ module.exports = {
             },
             {
                 id: 3,
-				description: "remover_usuario", // deletar usuário
+				description: "remover_usuario", // deletar usuário [Não funfa...]
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
@@ -89,7 +89,7 @@ module.exports = {
             },
             {
                 id: 15,
-				description: "deletar_usuario", // nova tnetativa de incluir o metodo deletar
+				description: "deletar_usuario", // nova tentativa de incluir o metodo deletar
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }

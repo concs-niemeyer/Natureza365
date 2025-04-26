@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const loginRoutes = require("./login.route");
+//const loginRoutes = require("./login.route");
 const userRoutes = require("./user.route");
 const localRoutes = require("./local.route");
 const rbacRoutes = require("./rbac.route");
