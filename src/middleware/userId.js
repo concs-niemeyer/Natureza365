@@ -4,6 +4,7 @@ const { verify } = require("jsonwebtoken");
 async function userId(req, res, next) {
   try {
     const { authorization } = req.headers;
+    //console.log(authorization,"<<AUTH>>")
 
     // Verifica se o cabeçalho Authorization existe e começa com "Bearer"
     if (!authorization || !authorization.startsWith("Bearer ")) {
@@ -12,7 +13,7 @@ async function userId(req, res, next) {
 
     // Extrai o token removendo o "Bearer "
     const token = authorization.split(" ")[1];
-
+    //console.log(token,"<<TOKEN>>")
     // Verifica e decodifica o token
     const decodedToken = verify(token, process.env.SECRET_JWT);
 
@@ -25,7 +26,7 @@ async function userId(req, res, next) {
     next();
   } catch (error) {
     console.error("Erro ao verificar o token JWT:", error.message);
-    return res.status(401).json({ error: "Acesso negado." });
+    return res.status(401).json({ error: "Acesso negado, token não aceito." });
   }
 }
 

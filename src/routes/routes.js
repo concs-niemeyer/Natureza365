@@ -10,10 +10,10 @@ const swaggerDocument = require("./doc.swagger.json");
 const routes = new Router();
 
 //routes.use("/login", loginRoutes);
-routes.use("/user", userRoutes);
+routes.use("/users", userRoutes);
 routes.use("/login", authRoutes);
 routes.use("/rbac", rbacRoutes);
-routes.use("/local", localRoutes);
+routes.use("/locals", localRoutes);
 routes.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = routes;
