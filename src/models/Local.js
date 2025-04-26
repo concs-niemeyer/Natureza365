@@ -12,6 +12,9 @@ const Local = connection.define("locals", {
   cep: {
     type: DataTypes.STRING,
   },
+  numero: {
+    type: DataTypes.STRING,
+  },
   userId: {
     type: DataTypes.INTEGER,
     references: {

@@ -21,6 +21,9 @@ module.exports = {
 		  cep: {
 			type: Sequelize.STRING
 		  },
+		  numero:{
+			type: Sequelize.STRING
+		  },
 		  userId: {
 			type: Sequelize.INTEGER,
 			references: {
