@@ -42,10 +42,6 @@ module.exports = {
 			allowNull: false,
 			type: Sequelize.DATE
 		  },
-		  endereco: {
-			allowNull: false,
-			type: Sequelize.STRING
-		  },
 		  isLogged:{
 			allowNull: false,
 			type: Sequelize.BOOLEAN,
