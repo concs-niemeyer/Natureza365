@@ -34,11 +34,11 @@ function hasPermission(permissions) {
             console.log(roles);
 
             // Mapeando os permissionIds e verificando se existe permissão
-            const permissionIds = roles.map(role => role.dataValues.permissionId);
-            console.log("::PERMISSIONS_ID")
-            console.log(permissionIds)
+            const permissions = roles.map(role => role.dataValues.permissions);
+            console.log("::PERMISSIONS")
+            console.log(permissions)
 
-            const existPermission = roles.some((role) => {
+            const existPermission = permissions.some((role) => {
                 return role.permissions.some((p) => {
 					
 					console.log(":::PERMISSÕES:::",p.description)

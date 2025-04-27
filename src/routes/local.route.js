@@ -1,58 +1,60 @@
 const { Router } = require("express");
 const { auth } = require("../middleware/auth");
-
 const LocalController = require("../controllers/LocalController");
-const localSchema = require("../schemas/localSchema");
 const validarLocal = require("../middleware/validateLocal");
+const localSchema = require("../schemas/localSchema");
 
+const localRoutes = Router();
 
-const localRoutes = new Router();
+// Middleware de autenticação aplicado globalmente (se quiser para todos)
+localRoutes.use(auth);
 
+// Cadastrar novo Local da Natureza
 localRoutes.post(
   "/",
-  auth,
-  /*  
-            #swagger.tags = ['Local da Natureza'],
-            #swagger.parameters['body'] = {
-                in: 'body',
-                Description: 'Adiciona um novo local da natureza',
-                schema: {
-                  $name: "Nome do local",
-                  $address: "Rua, complemento, bairro",  
-                  desc_flora: "tem flores silvestres",
-                  desc_fauna: "não tem cachorro do mato",
-                  
-            }
-        }
-    */
+  validarLocal(localSchema),
+  /*
+    #swagger.tags = ['Local da Natureza']
+    #swagger.description = 'Adiciona um novo local da natureza'
+    #swagger.parameters['body'] = {
+      in: 'body',
+      schema: {
+        $name: "Nome do local",
+        $address: "Rua, complemento, bairro",  
+        desc_flora: "Tem flores silvestres",
+        desc_fauna: "Não tem cachorro do mato",
+      }
+    }
+  */
   LocalController.cadastrar
 );
 
-localRoutes.get("/", auth, LocalController.listar);
+// Listar todos Locais da Natureza do usuário
+localRoutes.get("/", LocalController.listar);
 
+// Atualizar informações de um Local da Natureza
 localRoutes.put(
   "/:local_id",
-  auth,
   /*
-             #swagger.tags = ['Local da Natureza'],
-            #swagger.parameters['body'] = {
-                in: 'body',
-                description: 'Adiciona um novo local da natureza',
-                schema: {
-                  $nome: "Nome do local",
-                  $address: "Rua, complemento, bairro",
-                  $data_visita: "2024-04-20",  
-                  desc_flora: "tem flores silvestres",
-                  desc_fauna: "não tem cachorro do mato",
-                  
-            }
-        }.
-    */
+    #swagger.tags = ['Local da Natureza']
+    #swagger.description = 'Atualiza informações do local da natureza'
+    #swagger.parameters['body'] = {
+      in: 'body',
+      schema: {
+        $name: "Novo nome do local",
+        $address: "Novo endereço do local",
+        desc_flora: "Nova descrição da flora",
+        desc_fauna: "Nova descrição da fauna",
+      }
+    }
+  */
   LocalController.atualizar
 );
 
-localRoutes.delete("/:local_id", auth, LocalController.deletar);
+// Deletar um Local da Natureza
+localRoutes.delete("/:local_id", LocalController.deletar);
 
-localRoutes.get("/:local_id/maps", auth, LocalController.mapear);
+// Gerar link para Google Maps de um Local
+localRoutes.get("/:local_id/maps", LocalController.mapear);
 
 module.exports = localRoutes;
