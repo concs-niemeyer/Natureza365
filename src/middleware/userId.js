@@ -13,7 +13,7 @@ async function userId(req, res, next) {
 
     // Extrai o token removendo o "Bearer "
     const token = authorization.split(" ")[1];
-    //console.log(token,"<<TOKEN>>")
+    console.log(token,"<<TOKEN>>")
     // Verifica e decodifica o token
     const decodedToken = verify(token, process.env.SECRET_JWT);
 

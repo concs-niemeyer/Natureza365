@@ -9,7 +9,7 @@ function hasPermission(permissions) {
             return res.status(401).send({ message: "Token não fornecido" });
         }
 
-        const token = req.headers.authorization.split(" ")[1]; // Extraia o token {Bearer <token>}
+        const token = req.headers.authorization // Extraia o token {Bearer <token>}
         // Verifica se o token existe		
         if (!token) {
             return res.status(401).send({ message: "Token não fornecido" });
