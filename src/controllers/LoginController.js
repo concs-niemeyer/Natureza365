@@ -26,7 +26,7 @@ class LoginController {
 
       const user = await User.findOne({
         where: { email },
-        include: ["userRoles"],
+        include: ["roles"],
       });
 
       if (!user) {
