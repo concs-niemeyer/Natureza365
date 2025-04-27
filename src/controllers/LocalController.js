@@ -6,7 +6,7 @@ const Description = require("../models/LocalDescription");
 class LocalController {
   // Método para listar todos os Locais da Natureza do Usuário
   async listar(req, res) {
-    const { userId } = req.body;
+    const { userId } = req.userId;
 
     try {
       const locais = await Local.findAll({ where: { userId } });
