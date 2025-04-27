@@ -8,11 +8,13 @@ class LoginController {
     try {
       const { email, password, captchaValue } = req.body;
 
-       // Verificação do CAPTCHA
-       const isHuman = await verifyCaptcha(captchaValue);
-       if (!isHuman) {
-         return response.status(400).send({ message: "Falha na verificação do reCAPTCHA" });
-       }
+      // Verificação do CAPTCHA
+      const isHuman = await verifyCaptcha(captchaValue);
+      if (!isHuman) {
+        return response
+          .status(400)
+          .send({ message: "Falha na verificação do reCAPTCHA" });
+      }
 
       if (!email) {
         return res.status(400).json({ error: "O email é obrigatório" });
@@ -22,14 +24,16 @@ class LoginController {
         return res.status(400).json({ error: "A senha é obrigatória" });
       }
 
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({
+        where: { email },
+        include: ["userRoles"],
+      });
 
       if (!user) {
         return res.status(404).json({
           error: "Nenhum usuário corresponde ao email fornecido.",
         });
-	}
-
+      }
 
       // Comparar a senha fornecida com a senha armazenada
       const passwordMatch = await compare(password, user.password);
@@ -42,9 +46,13 @@ class LoginController {
         sub: user.id,
         email: user.email,
         name: user.name,
+        roles: user.roles.map(role => ({
+          id: role.id,
+          description: role.description
+        }))
       };
 
-      const token = sign(payload, process.env.SECRET_JWT, { expiresIn: '12h' });	// Token válido por 12 horas
+      const token = sign(payload, process.env.SECRET_JWT, { expiresIn: "12h" }); // Token válido por 12 horas
 
       res.status(200).json({ Token: token });
     } catch (error) {
