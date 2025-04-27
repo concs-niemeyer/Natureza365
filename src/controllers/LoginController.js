@@ -11,7 +11,7 @@ class LoginController {
       // Verificação do CAPTCHA
       const isHuman = await verifyCaptcha(captchaValue);
       if (!isHuman) {
-        return response
+        return res
           .status(400)
           .send({ message: "Falha na verificação do reCAPTCHA" });
       }
