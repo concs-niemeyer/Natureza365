@@ -19,6 +19,7 @@ class UserController {
     async findById(request, response) {
         const { id } = request.params;
         const data = await User.findByPk(id, { attributes: ['id', 'name', 'email', 'data_nascimento'] });
+        console.log(data,"<<DATA_FIND_USER>>")
 
         if (!data) {
             return response.status(404).send({ message: "Usuário não encontrado" });

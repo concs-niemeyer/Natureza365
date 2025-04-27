@@ -30,6 +30,13 @@ const Local = connection.define("locals", {
   lon: {
     type: DataTypes.STRING,
   },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: Date.now(),
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+  },
 });
 User.hasMany(Local, {
   foreignKey: "userId",

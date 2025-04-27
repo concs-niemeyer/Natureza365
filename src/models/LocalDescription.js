@@ -31,6 +31,8 @@ const Description = connection.define("descriptions", {
   desc_flora: {
     type: DataTypes.STRING,
   },
+  createdAt: DataTypes.DATE,								
+  updatedAt: DataTypes.DATE
 });
 
 User.hasMany(Description, {
