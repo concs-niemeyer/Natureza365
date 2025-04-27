@@ -28,7 +28,8 @@ class LoginController {
         where: { email },
         include: ["roles"],
       });
-
+      console.log(":::USER:::")
+      console.log(user)
       if (!user) {
         return res.status(404).json({
           error: "Nenhum usuário corresponde ao email fornecido.",
@@ -46,17 +47,22 @@ class LoginController {
         sub: user.id,
         email: user.email,
         name: user.name,
-        roles: user.roles.map(role => ({
+        roles: user.roles.map((role) => ({
           id: role.id,
-          description: role.description
-        }))
+          description: role.description,
+        })),
       };
 
-      const token = sign(payload, process.env.SECRET_JWT, { expiresIn: "12h" }); // Token válido por 12 horas
-
+      console.log("<<>PAYLOAD_SIGN_IN>>>")
+      console.log(payload);
+      
+      const token = sign(payload, process.env.SECRET_JWT, { expiresIn: "1h" }); // Token válido por 1h
+      
+      console.log(":::TOKEN_SIGN_IN:::")
+      console.log(token)
       res.status(200).json({ Token: token });
     } catch (error) {
-      console.error(error); // Adicionei um log para ver erros no console
+      console.error(error); // log para ver erros no console
       return res.status(500).json({ error: "Algo deu errado!" });
     }
   }

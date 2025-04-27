@@ -21,11 +21,11 @@ router.post(
                 in: 'body',
                 description: 'Adiciona um novo Usuário',
                 schema: {
-                  $nome: "Nome completo",
+                  $name: "Nome completo",
                   sexo: "feminino, masculino ou outros",
                   $cpf: "10987654321",  
                   $email: "teste@gmail.com",
-                  $password: "123",
+                  $password: "123456",
                   data_nascimento: "1996-12-15",
             }
         }
@@ -40,10 +40,10 @@ router.put(
             #swagger.parameters['userId'] = {
                 in: 'body',
                 schema: {
-                    $nome: "Nome completo",
-                    sexo: "feminino, masculino ou outros",
+                    $name: "Nome completo",
                     $cpf: "10987654321",  
                     $email: "teste@gmail.com",
+                    sexo: "feminino, masculino ou outros",
                     $password: "123",
                     data_nascimento: "1996-12-15",
                 }
