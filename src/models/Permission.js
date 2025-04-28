@@ -23,12 +23,12 @@ const Permission = connection.define("permissions", {
   },
 });
 
-// Relacionamento de muitos para muitos entre Role e Permission
-Role.belongsToMany(Permission, { through: PermissionRole });
-Permission.belongsToMany(Role, { through: PermissionRole });
+Role.belongsToMany(Permission, {through: PermissionRole})
+Permission.belongsToMany(Role, {through: PermissionRole})
+PermissionRole.hasMany(Permission, {foreignKey: 'id'})
 
-// Relacionamento de muitos para muitos entre User e Role
-User.belongsToMany(Role, { through: UserRole });
-Role.belongsToMany(User, { through: UserRole });
+
+User.belongsToMany(Role, {through: UserRole})
+Role.belongsToMany(User, {through: UserRole})
 
 module.exports = Permission;
