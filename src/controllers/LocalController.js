@@ -5,7 +5,7 @@ const Description = require("../models/LocalDescription");
 
 class LocalController {
   async listar(req, res) {
-    getUserId(req, res, async (idUser) => {
+    getUserId(req, res, async () => {
       try {
         const locais = await Local.findAll({ where: { userId: idUser } });
         const descriptionLocal = await Description.findOne({ where: { userId: idUser } });
