@@ -16,7 +16,12 @@ class Server {
   }
 
   async middlewares(app) {
-    app.use(cors());
+    app.use(cors({
+      origin: 'https://rota-verde365.onrender.com',
+      methods: [ 'GET', 'POST', 'PUT', 'DELETE'],
+      credentials: true
+      
+    }));
     app.use(express.json());
   }
 
