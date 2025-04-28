@@ -10,7 +10,9 @@ class LocalController {
       // console.log(idUser,":::ID_USUARIO:::")
       try {
         const locais = await Local.findAll({ where:{userId : idUser }});
-        res.json(locais);
+        const descriptionLocal = await Description.findOne({ where: {userId: idUser}})
+        
+        res.json(locais, descriptionLocal);
       } catch (error) {
         console.error("Erro ao localizar Locais da Natureza:", error);
         res
@@ -56,12 +58,11 @@ class LocalController {
   // Método para mapear um local da Natureza
   async mapear(req, res) {
     getUserId(req, res, async () => {
-      const userId = req.user.id;
       const localId = req.params.localId;
 
       try {
         const local = await Local.findOne({
-          where: { id: localId, userId },
+          where: { id: localId, idUser },
         });
 
         if (!local) {
@@ -93,7 +94,6 @@ class LocalController {
   // Método para atualizar um Local da Natureza
   async atualizar(req, res) {
     getUserId(req, res, async () => {
-      const userId = req.user.id;
       const { localId } = req.params;
       const { name, address } = req.body;
 
@@ -101,7 +101,7 @@ class LocalController {
         const [localAtualizado] = await Local.update(
           { name, address },
           {
-            where: { id: localId, userId },
+            where: { id: localId, idUser },
           }
         );
 
@@ -124,12 +124,12 @@ class LocalController {
   // Método para deletar um Local da Natureza
   async deletar(req, res) {
     getUserId(req, res, async () => {
-      const userId = req.user.id;
+     
       const { localId } = req.params;
 
       try {
         const localExistente = await Local.findOne({
-          where: { id: localId, userId },
+          where: { id: localId, idUser },
         });
 
         if (!localExistente) {
