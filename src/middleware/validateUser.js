@@ -29,7 +29,7 @@ const validarUser = (schema) => async (req, res, next) => {
     return false;
   }
 
-  if (!validarData(req.body.data_nascimento)) {
+  if (!validarData(req.body.dataNascimento)) {
     return res
       .status(400)
       .json({

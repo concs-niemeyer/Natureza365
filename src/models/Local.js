@@ -15,12 +15,10 @@ const Local = connection.define("locals", {
   numero: {
     type: DataTypes.STRING,
   },
-  userId: {
+  userId: { 
     type: DataTypes.INTEGER,
     references: {
-      // This is a reference to another model
       model: User,
-      // This is the column name of the referenced model
       key: "id",
     },
   },
@@ -32,15 +30,18 @@ const Local = connection.define("locals", {
   },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Date.now(),
   },
   updatedAt: {
     type: DataTypes.DATE,
   },
 });
+
 User.hasMany(Local, {
-  foreignKey: "userId",
+  foreignKey: 'userId', 
 });
-Local.belongsTo(User);
+
+Local.belongsTo(User, {
+  foreignKey: 'userId', 
+});
 
 module.exports = Local;

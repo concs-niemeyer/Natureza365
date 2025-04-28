@@ -90,7 +90,7 @@
                   "type": "string",
                   "example": "123"
                 },
-                "data_nascimento": {
+                "dataNascimento": {
                   "type": "string",
                   "example": "1996-12-15"
                 }
@@ -147,7 +147,7 @@
                   "type": "string",
                   "example": "123"
                 },
-                "data_nascimento": {
+                "dataNascimento": {
                   "type": "string",
                   "example": "1996-12-15"
                 }
@@ -197,11 +197,11 @@
                   "type": "string",
                   "example": "Rua, complemento, bairro"
                 },
-                "desc_flora": {
+                "descFlora": {
                   "type": "string",
                   "example": "tem flores silvestres"
                 },
-                "desc_fauna": {
+                "descFauna": {
                   "type": "string",
                   "example": "não tem cachorro do mato"
                 }
@@ -247,13 +247,13 @@
         }
       }
     },
-    "/local/{local_id}": {
+    "/local/{localId}": {
       "put": {
         "tags": ["Local da Natureza"],
         "description": "",
         "parameters": [
           {
-            "name": "local_id",
+            "name": "localId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -278,20 +278,20 @@
                   "type": "string",
                   "example": "Rua, complemento, bairro"
                 },
-                "data_visita": {
+                "dataVisita": {
                   "type": "string",
                   "example": "2024-04-20"
                 },
-                "desc_flora": {
+                "descFlora": {
                   "type": "string",
                   "example": "tem flores silvestres"
                 },
-                "desc_fauna": {
+                "descFauna": {
                   "type": "string",
                   "example": "não tem cachorro do mato"
                 }
               },
-              "required": ["nome", "address", "data_visita"]
+              "required": ["nome", "address", "dataVisita"]
             }
           }
         ],
@@ -314,7 +314,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "local_id",
+            "name": "localId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -341,12 +341,12 @@
         }
       }
     },
-    "/local/{local_id}/maps": {
+    "/local/{localId}/maps": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "local_id",
+            "name": "localId",
             "in": "path",
             "required": true,
             "type": "string"

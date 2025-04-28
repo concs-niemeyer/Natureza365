@@ -53,8 +53,8 @@ class LoginController {
         })),
       };
 
-      console.log("<<>PAYLOAD_SIGN_IN>>>")
-      console.log(payload);
+      // console.log("<<>PAYLOAD_SIGN_IN>>>")
+      // console.log(payload);
       
       const token = sign(payload, process.env.SECRET_JWT, { expiresIn: "1h" }); // Token válido por 1h
       

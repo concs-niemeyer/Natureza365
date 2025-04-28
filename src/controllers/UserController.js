@@ -7,7 +7,7 @@ class UserController {
     // Método achar todos os usuários
     async findAll(request, response) {
         const data = await User.findAll({
-            attributes: ['id', 'name', 'email', 'data_nascimento'],
+            attributes: ['id', 'name', 'email', 'dataNascimento'],
             include: { association: 'roles', attributes: ['id', 'description'] }
         });
         const total = await User.count();
@@ -18,7 +18,7 @@ class UserController {
     // Método achar usuário por ID
     async findById(request, response) {
         const { id } = request.params;
-        const data = await User.findByPk(id, { attributes: ['id', 'name', 'email', 'data_nascimento'] });
+        const data = await User.findByPk(id, { attributes: ['id', 'name', 'email', 'dataNascimento'] });
         console.log(data,"<<DATA_FIND_USER>>")
 
         if (!data) {
@@ -31,7 +31,7 @@ class UserController {
     // Método criar um novo usuário
     async createNewUser(request, response) {
         try {
-          const { email, name, password, sexo, cpf, data_nascimento, captchaValue } = request.body;
+          const { email, name, password, sexo, cpf, dataNascimento, captchaValue } = request.body;
       
           // Verificação do CAPTCHA
           const isHuman = await verifyCaptcha(captchaValue);
@@ -39,7 +39,7 @@ class UserController {
             return response.status(400).send({ message: "Falha na verificação do reCAPTCHA" });
           }
       
-          if (!email || !password || !sexo || !cpf || !data_nascimento ) {
+          if (!email || !name || !password || !sexo || !cpf || !dataNascimento ) {
             return response.status(400).send({ message: "Todos os campos são obrigatórios" });
           }
       
@@ -52,7 +52,7 @@ class UserController {
             password: passwordEncript,
             sexo: sexoLower,
             cpf,
-            data_nascimento,
+            dataNascimento,
           });
       
           return response.status(201).send(data);
@@ -63,7 +63,7 @@ class UserController {
       }
       
 
-    // Método Atualizar usuário // Não pode alterar o CPF do usuário
+    // Método Atualizar usuário // Não pode alterar o CPF e a data de nascimento do usuário
     async updateUser(request, response) {
         try {
             const { id } = request.params;

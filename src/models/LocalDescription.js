@@ -12,7 +12,7 @@ const Description = connection.define("descriptions", {
     },
   },
 
-  local_id: {
+  localId: {
     type: DataTypes.INTEGER,
     references: {
       model: Local,
@@ -20,21 +20,28 @@ const Description = connection.define("descriptions", {
     },
   },
 
-  data_visita: {
+  dataVisita: {
     type: DataTypes.DATE,
   },
 
-  desc_fauna: {
+  descFauna: {
     type: DataTypes.STRING,
   },
 
-  desc_flora: {
+  descFlora: {
     type: DataTypes.STRING,
   },
-  createdAt: DataTypes.DATE,								
-  updatedAt: DataTypes.DATE
+
+  createdAt: {
+    type: DataTypes.DATE,
+  },
+
+  updatedAt: {
+    type: DataTypes.DATE,
+  },
 });
 
+// Relacionamento entre User e Description
 User.hasMany(Description, {
   foreignKey: "userId",
 });
@@ -42,11 +49,12 @@ Description.belongsTo(User, {
   foreignKey: "userId",
 });
 
+// Relacionamento entre Local e Description
 Local.hasMany(Description, {
-  foreignKey: "local_id",
+  foreignKey: "localId",
 });
 Description.belongsTo(Local, {
-  foreignKey: "local_id",
+  foreignKey: "localId",
 });
 
 module.exports = Description;

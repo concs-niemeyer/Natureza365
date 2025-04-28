@@ -7,7 +7,7 @@ const userSchema = yup.object().shape({
   email: yup.string().email().required(),
   sexo: yup.string().nullable(),
   password: yup.string().required(),
-  data_nascimento: yup.date().required(),
+  dataNascimento: yup.date().required(),
 });
 
 module.exports = userSchema;

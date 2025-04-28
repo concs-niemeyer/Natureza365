@@ -20,7 +20,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      local_id: {
+      localId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -30,15 +30,15 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      data_visita: {
+      dataVisita: {
         allowNull: true,
         type: Sequelize.DATE,
       },
-      desc_fauna: {
+      descFauna: {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      desc_flora: {
+      descFlora: {
         allowNull: true,
         type: Sequelize.STRING,
       },

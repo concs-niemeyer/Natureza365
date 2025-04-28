@@ -1,7 +1,7 @@
 const { verify } = require("jsonwebtoken");
 
 // Middleware para verificar o token JWT
-async function userId(req, res, next) {
+async function getUserId(req, res, next) {
   try {
     const { authorization } = req.headers;
     //console.log(authorization,"<<AUTH>>")
@@ -13,14 +13,14 @@ async function userId(req, res, next) {
 
     // Extrai o token removendo o "Bearer "
     const token = authorization.split(" ")[1];
-    console.log(token,"<<TOKEN>>")
+    // console.log(token,"<<TOKEN>>")
     // Verifica e decodifica o token
     const decodedToken = verify(token, process.env.SECRET_JWT);
 
     // Adiciona o userId (ou outro identificador) ao objeto req
-    req.userId = decodedToken.id; // ou 'id' dependendo do payload
+   idUser = decodedToken.id; // ou 'id' dependendo do payload
 
-    //console.log("ID do usuário extraído do token:", req.userId);
+    //console.log("ID do usuário extraído do token:", req.idUser);
 
     // Passa para o próximo middleware
     next();
@@ -30,4 +30,4 @@ async function userId(req, res, next) {
   }
 }
 
-module.exports = { userId };
+module.exports = { getUserId };

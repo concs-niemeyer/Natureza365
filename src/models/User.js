@@ -1,5 +1,5 @@
-const { connection } = require("../database/connection")
-const {DataTypes} = require("sequelize")
+const { connection } = require("../database/connection");
+const { DataTypes } = require("sequelize");
 
 const User = connection.define('users', {
     id: {
@@ -10,10 +10,10 @@ const User = connection.define('users', {
     name: {
         type: DataTypes.STRING
     },
-	sexo: {
-		type: DataTypes.ENUM,
-		values: ['masculino', 'feminino', 'outros']		
-	},
+    sexo: {
+        type: DataTypes.ENUM,
+        values: ['masculino', 'feminino', 'outros']
+    },
     email: {
         type: DataTypes.STRING,
         unique: true
@@ -21,18 +21,15 @@ const User = connection.define('users', {
     password: {
         type: DataTypes.STRING,
     },
-	cpf: {
-		type: DataTypes.STRING
-		
-	},
-	data_nascimento: {
-		type: DataTypes.DATE
-	},
-	isLogged:{
-		type: DataTypes.BOOLEAN
-	},
-    createdAt: DataTypes.DATE,								
-    updatedAt: DataTypes.DATE
-})
+    cpf: {
+        type: DataTypes.STRING
+    },
+    dataNascimento: {
+        type: DataTypes.DATE
+    }
+}, { 
 
-module.exports = User
+    timestamps: true 
+});
+
+module.exports = User;

@@ -21,8 +21,8 @@ localRoutes.post(
       schema: {
         $name: "Nome do local",
         $address: "Rua, complemento, bairro",  
-        desc_flora: "Tem flores silvestres",
-        desc_fauna: "Não tem cachorro do mato",
+        descFlora: "Tem flores silvestres",
+        descFauna: "Não tem cachorro do mato",
       }
     }
   */
@@ -34,7 +34,7 @@ localRoutes.get("/", LocalController.listar);
 
 // Atualizar informações de um Local da Natureza
 localRoutes.put(
-  "/:local_id",
+  "/:localId",
   /*
     #swagger.tags = ['Local da Natureza']
     #swagger.description = 'Atualiza informações do local da natureza'
@@ -43,8 +43,8 @@ localRoutes.put(
       schema: {
         $name: "Novo nome do local",
         $address: "Novo endereço do local",
-        desc_flora: "Nova descrição da flora",
-        desc_fauna: "Nova descrição da fauna",
+        descFlora: "Nova descrição da flora",
+        descFauna: "Nova descrição da fauna",
       }
     }
   */
@@ -52,9 +52,9 @@ localRoutes.put(
 );
 
 // Deletar um Local da Natureza
-localRoutes.delete("/:local_id", LocalController.deletar);
+localRoutes.delete("/:localId", LocalController.deletar);
 
 // Gerar link para Google Maps de um Local
-localRoutes.get("/:local_id/maps", LocalController.mapear);
+localRoutes.get("/:localId/maps", LocalController.mapear);
 
 module.exports = localRoutes;
