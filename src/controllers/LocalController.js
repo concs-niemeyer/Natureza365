@@ -4,23 +4,23 @@ const { getUserId } = require("../middleware/getUserId");
 const Description = require("../models/LocalDescription");
 
 class LocalController {
-  // Método para listar todos os Locais da Natureza do Usuário [OK]
   async listar(req, res) {
-    getUserId(req, res, async () => {
-      // console.log(idUser,":::ID_USUARIO:::")
+    getUserId(req, res, async (idUser) => {
       try {
-        const locais = await Local.findAll({ where:{userId : idUser }});
-        const descriptionLocal = await Description.findOne({ where: {userId: idUser}})
-        
-        res.json({locais}, {descriptionLocal});
+        const locais = await Local.findAll({ where: { userId: idUser } });
+        const descriptionLocal = await Description.findOne({ where: { userId: idUser } });
+  
+        res.status(200).json({
+          locais: locais,
+          descriptionLocal: descriptionLocal
+        });
       } catch (error) {
         console.error("Erro ao localizar Locais da Natureza:", error);
-        res
-          .status(500)
-          .json({ error: "Erro ao localizar Locais da Natureza." });
+        res.status(500).json({ error: "Erro ao localizar Locais da Natureza." });
       }
     });
   }
+  
 
   // Método para cadastrar um Local da Natureza
   async cadastrar(req, res) {
