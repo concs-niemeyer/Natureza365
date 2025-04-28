@@ -12,7 +12,7 @@ class LocalController {
         const locais = await Local.findAll({ where:{userId : idUser }});
         const descriptionLocal = await Description.findOne({ where: {userId: idUser}})
         
-        res.json(locais, descriptionLocal);
+        res.json({locais}, {descriptionLocal});
       } catch (error) {
         console.error("Erro ao localizar Locais da Natureza:", error);
         res
