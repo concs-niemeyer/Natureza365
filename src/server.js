@@ -16,17 +16,19 @@ class Server {
   }
 
   async middlewares(app) {
-    app.use(cors({
+    const corsOptions = {
       origin: 'https://rota-verde365.onrender.com',
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // adiciona OPTIONS aqui
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       credentials: true,
-      allowedHeaders: ['Content-Type', 'Authorization']      // também permite headers usados
-    }));
+      allowedHeaders: ['Content-Type', 'Authorization']
+    };
   
-    app.options('*', cors()); // <-- isso faz seu backend responder automaticamente os OPTIONS!
+    app.use(cors(corsOptions));
+    app.options('*', cors(corsOptions)); // <-- use as MESMAS opções aqui
   
     app.use(express.json());
   }
+  
   
   async database() {
     try {
