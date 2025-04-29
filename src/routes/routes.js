@@ -15,5 +15,9 @@ routes.use("/login", authRoutes);
 routes.use("/rbac", rbacRoutes);
 routes.use("/locals", localRoutes);
 routes.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+routes.get("/ping", (req, res) => {
+    res.send("pong");
+  });
+  
 
 module.exports = routes;
