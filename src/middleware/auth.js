@@ -16,6 +16,7 @@ async function auth(req, res, next) {
 
     // Extrair o token removendo "Bearer " da string
     const token = authorization.split(" ")[1];
+    console.log(token,":::TOKEN:::")
 
     // Verificar o token usando jwt.verify
     req["payload"] = verify(token, process.env.SECRET_JWT);

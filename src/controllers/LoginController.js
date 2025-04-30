@@ -60,7 +60,7 @@ class LoginController {
       
       console.log(":::TOKEN_SIGN_IN:::")
       console.log(token)
-      res.status(200).json({ Token: token });
+      res.status(200).json({ token });
     } catch (error) {
       console.error(error); // log para ver erros no console
       return res.status(500).json({ error: "Algo deu errado!" });

@@ -1,25 +1,27 @@
-const jwt = require("jsonwebtoken");
+const { verify } = require('jsonwebtoken');
 const Permission = require("../models/Permission");
 const PermissionRole = require("../models/PermissionRole");
 
 function hasPermission(permissions) {
   return async (req, res, next) => {
-    // Verifica se o cabeçalho de autorização está presente
-    if (!req.headers.authorization) {
-      return res.status(401).send({ message: "Token não fornecido" });
+    const authHeader = req.headers.authorization;
+
+    // Verifica se o cabeçalho Authorization existe e começa com "Bearer "
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).send({ message: "Token mal formatado ou ausente" });
     }
 
-    const token = req.headers.authorization; // Extraia o token {Bearer <token>}
-    // Verifica se o token existe
-    if (!token) {
-      return res.status(401).send({ message: "Token não fornecido" });
-    }
+    // Extrair o token removendo "Bearer " da string
+    const token = authHeader.split(" ")[1];
 
-    // Faz a desestruturação do token e verifica se o token é válido
-    const decoded = jwt.verify(token, process.env.SECRET_JWT);
-    req.payload = decoded;
-    console.log(":::PAYLOAD:::");
-    console.log(decoded);
+    let decoded;
+    try {
+      decoded = verify(token, process.env.SECRET_JWT);
+      req.payload = decoded;
+      console.log(":::PAYLOAD:::", decoded);
+    } catch (err) {
+      return res.status(401).send({ message: "Token inválido", cause: err.message });
+    }
 
     try {
       const roles = await PermissionRole.findAll({
@@ -33,10 +35,7 @@ function hasPermission(permissions) {
       console.log(":::ROLES :::");
       console.log(roles);
 
-      // Mapeando os permissionIds e verificando se existe permissão
-      const permissionIds = roles.map((role) => role.dataValues.permissionId);
-      console.log(permissionIds);
-
+      // Verifica se pelo menos uma das permissões requisitadas está presente
       const existPermission = roles.some((role) => {
         return role.permissions.some((p) => {
           console.log(":::PERMISSÕES:::", p.description);
@@ -48,9 +47,9 @@ function hasPermission(permissions) {
       console.log(existPermission);
 
       if (!existPermission) {
-        return res
-          .status(403)
-          .send({ message: "Você não tem autorização para este recurso." });
+        return res.status(403).send({
+          message: "Você não tem autorização para este recurso.",
+        });
       }
 
       next();
