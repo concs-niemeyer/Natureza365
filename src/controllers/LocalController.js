@@ -7,11 +7,11 @@ class LocalController {
   async listar(req, res) {
     getUserId(req, res, async () => {
       try {
-        const locais = await Local.findAll({ where: { userId: idUser } });
+        const locals = await Local.findAll({ where: { userId: idUser } });
         const descriptionLocal = await Description.findOne({ where: { userId: idUser } });
   
         res.status(200).json({
-          locais: locais,
+          locals,
           descriptionLocal: descriptionLocal
         });
       } catch (error) {
